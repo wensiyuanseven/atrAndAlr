@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>循环队列</title>
+</head>
+
+<body>
+    <script>
+        class Queue {
+            constructor() {
+                this.count = 0;
+                this.lowestCount = 0;
+                this.items = {};
+            }
+            // 添加到队列的末尾
+            enqueue(element) {
+                this.items[this.count] = element;
+                this.count++;
+            }
+
+            dequeue() {
+                if (this.isEmpty()) {
+                    return undefined;
+                }
+                const result = this.items[this.lowestCount];
+                delete this.items[this.lowestCount];
+                this.lowestCount++;
+                return result;
+            }
+            peek() {
+                if (this.isEmpty()) {
+                    return undefined;
+                }
+                return this.items[this.lowestCount];
+            }
+
+            isEmpty() {
+                return this.size() === 0;
+            }
+
+            clear() {
+                this.items = {};
+                this.count = 0;
+                this.lowestCount = 0;
+            }
+
+            size() {
+                return this.count - this.lowestCount;
+            }
+
+            toString() {
+                if (this.isEmpty()) {
+                    return '';
+                }
+                let objString = `${this.items[this.lowestCount]}`;
+                for (let i = this.lowestCount + 1; i < this.count; i++) {
+                    objString = `${objString},${this.items[i]}`;
+                }
+                return objString;
+            }
+        }
+
+        // 和真实游戏还是有不同的  它是从第二项开始传递花鼓
+        //  (其实是一样的，从第二轮开始，拿花的那个人已经挂掉了，然后把花传递给了下一个人，那下一轮开始就是从下下个人开始循环)
+        function hotPotato(elementsList, num) {
+            const queue = new Queue();
+            const elimitatedList = [];//淘汰的人
+
+            for (let i = 0; i < elementsList.length; i++) {
+                queue.enqueue(elementsList[i]);
+            }
+
+
+            // ---------------循环队列----------------------
+            while (queue.size() > 1) {
+                for (let i = 0; i < num; i++) {
+                    queue.enqueue(queue.dequeue());   // 删掉队列第一个,并把这个值添加到队列的末尾
+                    console.log(queue.items)
+                }
+                elimitatedList.push(queue.dequeue());
+                console.log(queue.items, '竖着看每个数组的第一个')
+
+            }
+            return {
+                eliminated: elimitatedList,
+                winner: queue.dequeue()
+            };
+        }
+        const names = ['a', 'b', 'c', 'd'];
+        const result = hotPotato(names, 5);
+
+        // result.eliminated.forEach(name => {
+        //     console.log(`${name} was eliminated from the Hot Potato game.`);
+        // });
+
+        console.log(`The winner is: ${result.winner}`);
+
+        // ['Camila', 'Ingrid', 'Carl', 'John', 'Jack'];
+
+    </script>
+</body>
+
+</html>

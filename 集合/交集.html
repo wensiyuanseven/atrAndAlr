@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 求A与B的交集
+        let A = [1, 2, 3, 4, 8, 3, 2, 1, 1,]
+        let B = [3, 4, 5, 6, 7]
+        function intersection(a = [], b = []) {
+            let result = []
+            let bigArr = a
+            let smallArr = b
+            if (smallArr.length - bigArr.length > 0) {
+                bigArr = b
+                smallArr = a
+            }
+            for (let i = 0, item; item = smallArr[i++];) {
+                if (bigArr.includes(item)) {
+                    result.push(item)
+                }
+                // for (let i = 0; i < bigArr.length; i++) {
+                //     if (item == bigArr[i]) {
+                //         result.push(item)
+                //     }
+                // }
+            }
+            return result
+        }
+        console.log(intersection(A, B))
+    </script>
+</body>
+
+</html>

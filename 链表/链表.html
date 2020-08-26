@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链表</title>
+</head>
+
+<body>
+    <script>
+        function defaultEquals(a, b) {
+            return a === b;
+        }
+        class Node {
+            constructor(element, next) {
+                this.element = element;
+                this.next = next;
+            }
+        }
+        class LinkedList {
+            constructor(equalsFn = defaultEquals) {
+                this.equalsFn = equalsFn;
+                this.count = 0;
+                this.head = undefined;
+            }
+            //向链表尾部添加元素
+            push(element) {
+                const node = new Node(element);
+                let current;
+                if (this.head == null) {
+                    // catches null && undefined
+                    this.head = node;
+                } else {
+                    current = this.head;
+                    while (current.next != null) {
+                        current = current.next;
+                    }
+                    current.next = node;
+                }
+                this.count++;
+            }
+            // 根据索引拿元素的位置
+            getElementAt(index) {
+                if (index >= 0 && index < this.count) {
+                    let node = this.head;
+                    for (let i = 0; i < index; i++) {
+                        node = node.next;
+                    }
+                    return node;
+                }
+                return undefined;
+            }
+            removeAt(index) {
+                // 索引是从0开始的  是根据索引移除的 当然的小于count了 count相当于length
+                if (index >= 0 && index < this.count) {
+                    let current = this.head;
+                    if (index === 0) {
+                        this.head = current.next;
+                    } else {
+                        const previous = this.getElementAt(index - 1);
+
+                        current = previous.next;
+                        previous.next = current.next;
+                    }
+                    this.count--;
+                    return current.element;
+                }
+                return undefined;
+            }
+            // 从链表中移除元素
+            remove(element) {
+                const index = this.indexOf(element);
+                return this.removeAt(index);
+            }
+            // let arr = [1, 2]
+            // // 在索引为2[最末尾]的地方插入一个元素
+            // arr.splice(2, 1, '10') //arr [1,2,'10']
+            // 在任意位置插入元素
+            insert(element, index) {
+                // 和数组一样 可以在最末尾的前方插入元素
+                if (index >= 0 && index <= this.count) {
+                    const node = new Node(element);
+                    if (index === 0) {
+                        // 不用烤炉head为nul的情况
+                        const current = this.head;
+                        node.next = current;
+                        this.head = node;
+                    } else {
+                        // 在尾部或者中间添加
+                        // 找到当前索引前面的值
+                        const previous = this.getElementAt(index - 1);
+                        // 顺序不能变
+                        node.next = previous.next;
+                        previous.next = node;
+
+                    }
+                    this.count++;
+                    return true;
+                }
+                return false;
+            }
+            // 返回一个元素的位置
+            indexOf(element) {
+                let current = this.head;
+                for (let i = 0; i < this.size(); i++) {
+                    // 判断两个值是否相等
+                    if (this.equalsFn(element, current.element)) {
+                        return i;
+                    }
+                    current = current.next;
+                }
+                return -1;
+            }
+            isEmpty() {
+                return this.size() === 0;
+            }
+            size() {
+                return this.count;
+            }
+            getHead() {
+                return this.head;
+            }
+            clear() {
+                this.head = undefined;
+                this.count = 0;
+            }
+            toString() {
+                if (this.head == null) {
+                    return '';
+                }
+                let objString = `${this.head.element}`
+                let current = this.head.next
+                while (current != null) {
+                    objString += `,${current.element}`
+                    current = current.next
+                }
+                return objString;
+            }
+        }
+        const list = new LinkedList()
+        list.push(15)
+        list.push(20)
+        list.push(30)
+        // list.removeAt(2)
+        list.insert('插入', 2)
+        console.log(list.getHead())
+        console.log(list.toString())
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class mySet {
+            constructor() {
+                this.items = {}
+            }
+            has(element) {
+                return this.items.hasOwnProperty(element)
+            }
+            add(element) {
+                if (!this.has(element)) {
+                    this.items[element] = element
+                    return true
+                }
+                return false
+            }
+            values() {
+                return Object.values(this.items)
+            }
+            uniue(newSet) {
+                const result = new mySet()
+                this.values().forEach(element => {
+                    result.add(element)
+                })
+                newSet.values().forEach(element => {
+                    result.add(element)
+                })
+                return result
+            }
+        }
+        let A = new mySet()
+        A.add('a')
+        A.add('b')
+        let B = new mySet()
+        B.add('b')
+        B.add('c')
+        let result = A.uniue(B)
+        console.log(result.values())
+
+        console.log(new Set(['a', 'a']))
+    </script>
+</body>
+
+</html>
