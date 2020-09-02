@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const isBalanced = function (root) {
+            // 立一个flag，只要有一个高度差绝对值大于1，这个flag就会被置为false
+            let flag = true
+            // 定义递归逻辑
+            function dfs(root) {
+                // 如果是空树，高度记为0；如果flag已经false了，那么就没必要往下走了，直接return
+                if (!root || !flag) {
+                    return 0
+                }
+                // 计算左子树的高度
+                const left = dfs(root.left)
+                // 计算右子树的高度
+                const right = dfs(root.right)
+                // 如果左右子树的高度差绝对值大于1，flag就破功了
+                if (Math.abs(left - right) > 1) {
+                    flag = false
+                    // 后面再发生什么已经不重要了，返回一个不影响回溯计算的值
+                    return 0
+                }
+                // 返回当前子树的高度  每次比较完之后都加1
+                return Math.max(left, right) + 1
+            }
+
+            // 递归入口
+            dfs(root)
+            // 返回flag的值
+            return flag
+        };
+
+        let tree = {
+            key: 11,
+            left: {
+                key: 7,
+                left: {
+                    key: 5,
+                    left: {
+                        key: 4,
+                        left: {
+                            key: 4, left: null, right: null
+                        },
+                        right: null
+                    },
+                    right: null
+                },
+                right: null
+            },
+            right: null
+        }
+        console.log(isBalanced(tree))
+    </script>
+</body>
+
+</html>

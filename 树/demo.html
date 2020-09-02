@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo</title>
+</head>
+
+<body>
+    <script>
+        const getArr = (m, n) => {
+            return Array.from({ length: m }, x => n)
+        }
+        console.log(getArr(10, 100))
+        let tree = {}
+        function TreeNode(val) {
+            this.val = val;
+            this.left = this.right = null;
+        }
+        function insert(root, n) {
+            // 若 root 为空，说明当前是一个可以插入的空位
+            if (!root) {
+                // 用一个值为n的结点占据这个空位
+                root = new TreeNode(n)
+                // tree = root
+                return
+            }
+            // 查找成功，说明值为n的结点已经存在，不再重复创建，直接返回
+            if (root.val === n) {
+                return
+            } else if (root.val > n) {
+                // 当前结点数据域大于n，向左查找
+                insert(root.left, n)
+            } else {
+                // 当前结点数据域小于n，向右查找
+                insert(root.right, n)
+            }
+        }
+        function deleteVal(root, n) {
+            // 如果没找到目标结点，则直接返回
+            if (!root) {
+                return
+            }
+            // 定位到目标结点，开始分情况处理删除动作
+            if (root.val === n) {
+                // 若是叶子结点，则不需要想太多，直接删除
+                if (!root.left && !root.right) {
+                    root = null
+                } else if (root.left) {
+                    // 寻找左子树里值最大的结点
+                    const maxLeft = findMax(root.left)
+                    // 用这个 maxLeft 覆盖掉需要删除的当前结点
+                    root.val = maxLeft.val
+                    // 覆盖动作会消耗掉原有的 maxLeft 结点
+                    delete (root.left, maxLeft.val)
+                } else {
+                    // 寻找右子树里值最小的结点
+                    const minRight = findMin(root.right)
+                    // 用这个 minRight 覆盖掉需要删除的当前结点
+                    root.val = minRight.val
+                    // 覆盖动作会消耗掉原有的 minRight 结点
+                    delete (root.right, minRight.val)
+                }
+            } else if (root.val > n) {
+                // 若当前结点的值比 n 大，则在左子树中继续寻找目标结点
+                delete (root.left, n)
+            } else {
+                // 若当前结点的值比 n 小，则在右子树中继续寻找目标结点
+                delete (root.right, n)
+            }
+        }
+
+        // 寻找左子树最大值
+        function findMax(root) {
+            while (root.right) {
+                root = root.right
+            }
+            return root
+        }
+
+        // 寻找右子树的最小值
+        function findMin(root) {
+            while (root.left) {
+                root = root.left
+            }
+            return root
+        }
+        insert(tree, 20)
+        console.log(tree, '---')
+    </script>
+</body>
+
+</html>
