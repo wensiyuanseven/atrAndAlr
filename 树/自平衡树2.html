@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+     * @param {TreeNode} root
+     * @return {TreeNode}
+     */
+        const balanceBST = function (root) {
+            // 初始化中序遍历序列数组
+            const nums = []
+            // 定义中序遍历二叉树，得到有序数组
+            function inorder(root) {
+                if (!root) {
+                    return
+                }
+                inorder(root.left)
+                nums.push(root.val)
+                inorder(root.right)
+            }
+
+            // 这坨代码的逻辑和上一节最后一题的代码一模一样
+            function buildAVL(low, high) {
+                // 若 low > high，则越界，说明当前索引范围对应的子树已经构建完毕
+                if (low > high) {
+                    return null
+                }
+                // 取数组的中间值作为根结点值
+                const mid = Math.floor(low + (high - low) / 2)
+                // 创造当前树的根结点
+                const cur = new TreeNode(nums[mid])
+                // 构建左子树
+                cur.left = buildAVL(low, mid - 1)
+                // 构建右子树
+                cur.right = buildAVL(mid + 1, high)
+                // 返回当前树的根结点
+                return cur
+            }
+            // 调用中序遍历方法，求出 nums
+            inorder(root)
+            // 基于 nums，构造平衡二叉树
+            return buildAVL(0, nums.length - 1)
+        };
+    </script>
+</body>
+
+</html>
