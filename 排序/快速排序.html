@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        function quickSort(arr) {
+            if (arr.length <= 1) {
+                return arr
+            }
+            let num = Math.floor(arr.length / 2)
+            let val = arr.splice(num, 1)
+            debugger
+            let left = []
+            let right = []
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] < val) {
+                    left.push(arr[i])
+                } else {
+                    right.push(arr[i])
+                }
+            }
+            console.log(val)
+            // val本身就是一个数组了 就不能再加中括号了
+            return quickSort(left).concat(val, quickSort(right))
+        }
+        console.log(quickSort([10, 6, 7, 20, 8, 9, 12]))
+
+    </script>
+</body>
+
+</html>

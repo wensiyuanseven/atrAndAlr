@@ -17,6 +17,7 @@
             push(element) {
                 this.items[this.count] = element;
                 this.count++;
+                return this.count
             }
             pop() {
                 if (this.isEmpty()) {

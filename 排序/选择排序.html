@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        function swap(array, a, b) {
+
+            /* const temp = array[a];
+            array[a] = array[b];
+            array[b] = temp; */
+
+            //ES6的解构赋值
+            [array[a], array[b]] = [array[b], array[a]];
+        }
+
+        const selectionSort = array => {
+            const { length } = array
+            let indexMin;
+
+            // 外层控制循环次数
+            for (let i = 0; i < length - 1; i++) {
+                indexMin = i
+                // 内层控制每轮比较次数 找到每一轮最小值的索引 与外层当前索引进行比较  当第一轮索引完之后
+                for (let j = i; j < length; j++) {
+                    // 当前值小于最小值
+                    if (array[j] < array[indexMin]) {
+                        // 让最小值的索引等于当前索引
+                        indexMin = j
+                    }
+                }
+
+                if (i !== indexMin) {
+                    // let temp = arr[indexMin]
+                    // arr[indexMin] = arr[i]
+                    // arr[i] = temp
+                    // 交换元素
+                    swap(array, i, indexMin)
+                }
+
+            }
+            return array;
+        }
+
+        let arr = [7, 65, 61, 333, 0]
+
+        console.log(selectionSort(arr))
+    </script>
+</body>
+
+</html>

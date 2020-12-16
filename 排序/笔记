@@ -1,0 +1,24 @@
+性能比较
+快速排序>插入排序>选择排序=冒泡排序
+
+交换元素的几种方式
+
+-------第一种--------
+let temp=arr[index]
+arr[index]=arr[index+1]
+arr[index+1]=temp
+
+--------第二种--------
+function swap(array, a, b) {
+    // ES6的解构赋值
+    [array[a], array[b]] = [array[b], array[a]]
+}
+
+// 结构赋值-交换变量的值 阮一峰
+let x = 1;
+let y = 2;
+
+[x, y] = [y, x];
+
+--------第三种--------
+arr[j] = [ arr[j + 1], arr[j + 1] = arr[j] ][0]

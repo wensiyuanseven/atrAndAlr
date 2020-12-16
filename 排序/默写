@@ -1,0 +1,66 @@
+插入排序
+
+function insertSort(arr){
+    let temp=null;
+    for(let i=1;i<arr.length;i++){
+      let j=i;
+      let temp=arr[i];
+      while(j>0&&temp<arr[i-1]){
+           arr[i]=arr[i-1];
+           j--;
+      }
+     arr[j]=temp
+    }
+    return arr
+}
+
+选择排序
+
+function selectSort(arr){
+ for(let i=0;i<arr.length-1;i++){
+    let indexMin=i
+    for(let j=i;j<arr.length-1;j++){
+        if(arr[j]<arr[j-1]){
+            indexMin=j
+        }
+    }
+    if(indexMin!==j){
+        //交换位置
+        let temp=arr[indexMin]
+        arr[indexMin]=arr[j]
+        arr[j]=temp
+    }
+ }
+ return arr
+}
+
+冒泡排序u
+
+function upSort(arr){
+  for(let i=0;i<arr.length-1;i++){
+      for(let j=0;j<arr.length-1-i;j++){
+        if(arr[j]<arr[j+1]){
+            [arr[j],arr[j+1]]=[arr[j+1],arr[j]]
+        }
+      }
+  }
+  return arr
+}
+
+快速排序
+
+function quickSort(arr){
+     if(arr.length<=1) return
+     let index=Math.floor(arr.length/2)
+     let val=arr.splice(index,1)
+     let left=[]
+     let right=[]
+     for(let i=0;i<arr.length;i++){
+         if(val<arr[i]){
+             left.push(arr[i])
+         }else{
+              right.push(arr[i])
+         }
+     }
+     return  quickSort(left).concat(val,quickSort(right))
+}

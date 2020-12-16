@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 插入排序
+
+        function insertSort(arr) {
+            let temp = null;
+            for (let i = 1; i < arr.length; i++) {
+                let j = i;
+                let temp = arr[i];
+                while (j > 0 && temp < arr[j - 1]) {
+                    arr[j] = arr[j - 1];
+                    j--;
+                }
+                arr[j] = temp
+            }
+            return arr
+        }
+
+        // 选择排序
+
+        function selectSort(arr) {
+            for (let i = 0; i < arr.length - 1; i++) {
+                let indexMin = i
+                for (let j = i; j < arr.length; j++) {
+                    if (arr[j] < arr[indexMin]) {
+                        indexMin = j
+                    }
+                }
+                if (indexMin !== i) {
+                    //交换位置
+                    let temp = arr[indexMin]
+                    arr[indexMin] = arr[i]
+                    arr[i] = temp
+                }
+            }
+            return arr
+        }
+
+        // 冒泡排序
+
+        function upSort(arr) {
+            for (let i = 0; i < arr.length - 1; i++) {
+                for (let j = 0; j < arr.length - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+                    }
+                }
+            }
+            return arr
+        }
+
+        // 快速排序
+
+        function quickSort(arr) {
+            if (arr.length <= 1) return arr
+            let index = Math.floor(arr.length / 2)
+            let val = arr.splice(index, 1)
+            let left = []
+            let right = []
+            for (let i = 0; i < arr.length; i++) {
+                if (val > arr[i]) {
+                    left.push(arr[i])
+                } else {
+                    right.push(arr[i])
+                }
+            }
+            return quickSort(left).concat(val, quickSort(right))
+        }
+        // document.write(insertSort([5, 0, 10, 1]))
+        // document.write(selectSort([5, 0, 10, 1]))
+        // document.write(upSort([5, 0, 10, 1]))
+        document.write(quickSort([5, 0, 10, 1]))
+
+    </script>
+</body>
+
+</html>
